@@ -1275,7 +1275,7 @@ local function proteccionAntiDestruccion()
     end)
     
     PlayerGui.DescendantRemoving:Connect(function(descendant)
-        if descendant.Name == "MoneyBypasserLoader" or descendant.Name == "ArcadeGUI" then
+        if descendant.Name == "MoneyBypasserLoader" then
             task.spawn(function()
                 task.wait(0.05)
                 restaurarGUI(descendant.Name)
@@ -1286,7 +1286,7 @@ end
 
 local function proteccionAntiOcultacion()
     local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
-    local guisProtegidos = {"MoneyBypasserLoader", "ArcadeGUI"}
+    local guisProtegidos = {"MoneyBypasserLoader"}
     
     local function forzarVisibilidad(gui)
         if not gui or not gui.Parent then return end
