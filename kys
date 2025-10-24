@@ -734,7 +734,7 @@ end)
         openTween.Completed:Wait()
         
         task.spawn(function()
-            local phase1Duration = 60
+            local phase1Duration = 20
             local phase1StartTime = tick()
             local lastMessageTime = tick()
             
