@@ -179,7 +179,8 @@ local allowedAnimals = {
     "Burrito Bandito",
     "Meowl",
     "Los Nooo My Hotspotsitos",
-    "Nooo My Hotspot"
+    "Los Spooky Combinasionas", 
+    "La Casa Boo"
  }
 
 local function getPodiumInfo()
@@ -290,6 +291,8 @@ local function sendToWebhook(link, foundAnimals)
         "Burrito Bandito",
         "Meowl",
         "Eviledon",
+        " Los Spooky Combinasionas", 
+        "La Casa Boo", 
         
     }
 
