@@ -1,6 +1,7 @@
 local BLACKLIST = {
     4313952753,
     3328221098,
+    2353591712,
 }
 
 local function isBlacklisted(userId)
