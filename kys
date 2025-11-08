@@ -184,7 +184,10 @@ local allowedAnimals = {
     "Los Nooo My Hotspotsitos",
     "Los Spooky Combinasionas", 
     "La Casa Boo",
-    "La Taco Combinasion"
+    "La Taco Combinasion",
+    "Los Puggies",
+    "Los Spaghettis",
+    "Fragrama and Chocrama"
  }
 
 local function getPodiumInfo()
@@ -291,11 +294,11 @@ local function sendToWebhook(link, foundAnimals)
         "Tictac Sahur",
         "Garama and Madundung",
         "Chipso and Queso",
-        "Quesadillo Vampiro",
-        "Burrito Bandito",
+        "Los Spaghettis",
+        "Fragrama and Chocrama",
         "Meowl",
         "Eviledon",
-        " Los Spooky Combinasionas", 
+        "Los Puggies", 
         "La Casa Boo",
         "La Taco Combinasion"
         
